@@ -15,8 +15,12 @@ public class Util {
         String userName = "root";
         String password = "root";
 
+        Connection conn;
+
         try {
-            return DriverManager.getConnection(connectionURL, userName, password);
+            conn =  DriverManager.getConnection(connectionURL, userName, password);
+            conn.setAutoCommit(false);
+            return conn;
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -13,10 +13,9 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void createUsersTable() {
         try (Statement statement = connection.createStatement()) {
-           // statement.execute();
-           connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-           connection.setAutoCommit(false);
-           statement.executeUpdate("CREATE TABLE IF NOT EXISTS userstable (id bigint AUTO_INCREMENT NOT NULL, name varchar(100) NOT NULL, lastName varchar(100) NOT NULL, age tinyint(3) NOT NULL, primary key (id))");
+
+            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS userstable (id bigint AUTO_INCREMENT NOT NULL, name varchar(100) NOT NULL, lastName varchar(100) NOT NULL, age tinyint(3) NOT NULL, primary key (id))");
            connection.commit();
         } catch (SQLException e) {
             Util.rollbackQuietly(connection);
@@ -28,7 +27,6 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = connection.createStatement()) {
 
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            connection.setAutoCommit(false);
             statement.executeUpdate("DROP TABLE IF EXISTS userstable");
             connection.commit();
 
@@ -42,7 +40,6 @@ public class UserDaoJDBCImpl implements UserDao {
         try(PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO userstable (name, lastName, age) VALUES (?,?,?)")) {
 
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            connection.setAutoCommit(false);
 
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
@@ -60,7 +57,6 @@ public class UserDaoJDBCImpl implements UserDao {
         try(PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM userstable WHERE id = ?")) {
 
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            connection.setAutoCommit(false);
 
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
@@ -76,7 +72,6 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = connection.createStatement()) {
 
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            connection.setAutoCommit(false);
 
             List<User> list = new ArrayList<>();
             ResultSet resultSet = statement.executeQuery("SELECT id, name, lastName, age FROM userstable");
@@ -103,7 +98,6 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = connection.createStatement()) {
 
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            connection.setAutoCommit(false);
             statement.executeUpdate("DELETE FROM userstable");
             connection.commit();
 
