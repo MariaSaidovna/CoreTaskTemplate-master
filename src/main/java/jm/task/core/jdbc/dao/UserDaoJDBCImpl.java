@@ -16,7 +16,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS userstable (id bigint AUTO_INCREMENT NOT NULL, name varchar(100) NOT NULL, lastName varchar(100) NOT NULL, age tinyint(3) NOT NULL, primary key (id))");
-           connection.commit();
+            connection.commit();
         } catch (SQLException e) {
             Util.rollbackQuietly(connection);
             e.printStackTrace();
